@@ -1,4 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponseRedirect, render_to_response, HttpResponse, get_object_or_404
+from django.contrib.auth import authenticate, login
+from.django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Deposit, Placebet
+from .forms import DepositForm,PlacebetForm
+
+
 # import logging
 
 # Create your views Here
@@ -7,10 +14,40 @@ from django.shortcuts import render
 # from django.views import views
 # from authentication.models import User
 # from django.core.mail import EmailMessage
-#
+@login_required(login_url='/accounts/login/')
 def home(request):
     return render(request, 'index.html')
-#
+
+@login_required(login_url='/accounts/login/')
+def deposit(request):
+    if request.method == 'POST':
+       form = DepositForm(request.POST)
+       if form. is_valid():
+           mobile_number = request.POST.get('mobile_number')
+           user_id = request.POST.get('user_id')
+           amount = request.POST.get('amount')
+
+        #     # save Deposit data
+        # user=User(
+        #   mobile_number=mobile_number,
+        #   user_id=user_id,
+        #   amount=amount
+        # )
+        # deposit.save()
+
+    return render(request, 'deposit.html', {'form,': form})
+
+@login_required(login_url='/accounts/login/')
+def placebet(request):
+    if request.method == 'POST':
+        form = PlacebetForm(request.POST)
+        if form. is_valid():
+            game_id = request.POST.get('game_id')
+            amount = request.POST.get('amount')
+            prediction = request.POST.get('prediction')
+
+    return render(request, 'placebet.html', {{'form', form}})
+
 # class UserRegistration(View):
 #     def post(self,reqest,*args,**kwargs):
 #         try:

@@ -1,0 +1,11 @@
+<form action="" method="post">
+  <h1>Placebet Form</h1>
+  <p id="mobile" class="order">
+    <p>Mobile Number</p>{{ form.mobile_number }}</p>
+  <p id="email" class="order">
+    <p>Email</p>{{ form.email }}</p>
+  <p id="prediction" class="order">
+    <p>Prediction</p>{{ form.prediction }}</p>
+  {% csrf_token %}
+  <input type="submit" value="Submit Details">
+</form>

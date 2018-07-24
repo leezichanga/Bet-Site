@@ -1,0 +1,11 @@
+<form action="" method="post">
+  <h1>Deposit Form</h1>
+  <p id="mobile" class="order">
+    <p>Mobile Number</p>{{ form.mobile_number }}</p>
+  <p id="user" class="order">
+    <p>User ID</p>{{ form.user_id }}</p>
+  <p id="amount" class="order">
+    <p>Amount</p>{{ form.amount }}</p>
+  {% csrf_token %}
+  <input type="submit" value="Submit Details">
+</form>
