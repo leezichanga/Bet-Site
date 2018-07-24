@@ -13,7 +13,7 @@ class DepositForm(forms.ModelForm):
         self.fields['user_id'].widget.attrs['placeholder'] = ' User ID'
         self.fields['amount'].widget.attrs['placeholder'] = ' Amount'
 
-class PlacebetForm(forms.ModelForm)
+class PlacebetForm(forms.ModelForm):
     class Meta:
         model = Placebet
         fields = ('game_id', 'amount', 'prediction')

@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect, render_to_response, HttpResponse, get_object_or_404
-from django.contrib.auth import authenticate, login
-from.django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Deposit, Placebet
 from .forms import DepositForm,PlacebetForm
+from django.http import JsonResponse
 
 
 # import logging
@@ -14,11 +16,12 @@ from .forms import DepositForm,PlacebetForm
 # from django.views import views
 # from authentication.models import User
 # from django.core.mail import EmailMessage
-@login_required(login_url='/accounts/login/')
-def home(request):
+# @login_required(login_url='/accounts/login/')
+def index(request):
+    current_user = request.user
     return render(request, 'index.html')
 
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def deposit(request):
     if request.method == 'POST':
        form = DepositForm(request.POST)
@@ -27,17 +30,17 @@ def deposit(request):
            user_id = request.POST.get('user_id')
            amount = request.POST.get('amount')
 
-        #     # save Deposit data
-        # user=User(
-        #   mobile_number=mobile_number,
-        #   user_id=user_id,
-        #   amount=amount
-        # )
-        # deposit.save()
+            # save Deposit data
+           user=User(
+           mobile_number=mobile_number,
+           user_id=user_id,
+           amount=amount
+           )
+           deposit.save()
 
     return render(request, 'deposit.html', {'form,': form})
 
-@login_required(login_url='/accounts/login/')
+# @login_required(login_url='/accounts/login/')
 def placebet(request):
     if request.method == 'POST':
         form = PlacebetForm(request.POST)
@@ -47,6 +50,20 @@ def placebet(request):
             prediction = request.POST.get('prediction')
 
     return render(request, 'placebet.html', {{'form', form}})
+
+def balance(request):
+    mobile_number = request.POST.get('mobile_number')
+    email = request.POST.get('email')
+    balance = request.POST.get('balance')
+    recipient = BalanceRecipients(mobile_number=mobile_number, email=email, balance=balance)
+    recipient.save()
+    send_balance(name, email, balance)
+    data = {
+    'mobile_number'
+    'email'
+    'balance'
+    }
+    return JsonResponse(data)
 
 # class UserRegistration(View):
 #     def post(self,reqest,*args,**kwargs):

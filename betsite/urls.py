@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns=[
-url('$',views.home,name='home'),
+url('$',views.index,name='index'),
 url(r'^deposit/',views.deposit, name='deposit'),
 url(r'^placebet/',views.placebet, name='placebet')
 ]
