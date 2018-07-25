@@ -49,6 +49,13 @@ def placebet(request):
             amount = request.POST.get('amount')
             prediction = request.POST.get('prediction')
 
+            # save Placebet data
+            user=User(
+            game_id=game_id,
+            amount=amount,
+            prediction=prediction
+            )
+            placebet.save()
     return render(request, 'placebet.html', {{'form', form}})
 
 def balance(request):
@@ -59,9 +66,9 @@ def balance(request):
     recipient.save()
     send_balance(name, email, balance)
     data = {
-    'mobile_number'
-    'email'
-    'balance'
+    'mobile_number':'mobile_number',
+    'email':'email',
+    'balance':'balance'
     }
     return JsonResponse(data)
 
